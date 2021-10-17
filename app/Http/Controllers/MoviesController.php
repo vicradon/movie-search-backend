@@ -42,14 +42,14 @@ class MoviesController extends Controller
     public function fetchFromCache($title)
     {
         $start_time = now();
-        $cached_response = Redis::get($title);
+        $cached_movies = Redis::get($title);
 
-        if ($cached_response) {
+        if ($cached_movies) {
             $finish_time = now();
 
             return response()->json([
                 'data' => [
-                    'movies' => json_decode($cached_response),
+                    'movies' => json_decode($cached_movies),
                     'duration_in_milliseconds' => $finish_time->diffInMilliseconds($start_time),
                 ]
             ]);
